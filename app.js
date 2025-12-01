@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +11,27 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+
+// Swagger setup
+const swaggerOptions = {
+  swaggerDefinition: {
+    myapi: "1.0.0",
+    info: {
+      title: "Order API",
+      version: "1.0.0",
+      description: "Rotas da API de pedidos",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // MongoDB Connection
 mongoose
