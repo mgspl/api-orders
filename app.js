@@ -41,7 +41,9 @@ mongoose
 
 // Routes
 const orderRoutes = require("./routes/ordersRoutes.js");
+const userRoutes = require("./routes/userRoutes.js");
 app.use("/order", orderRoutes);
+app.use("/login", userRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 3000;

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { verifyToken } = require("../middlewares/authMiddleware.js");
 const {
   createOrder,
   listAll,
@@ -20,7 +21,7 @@ const {
  *       500:
  *         description: Mensagem do erro
  */
-router.post("/", createOrder);
+router.post("/", verifyToken, createOrder);
 
 // Rota para listar todos os pedidos
 /**
@@ -34,7 +35,7 @@ router.post("/", createOrder);
  *       500:
  *         description: Mensagem do erro
  */
-router.get("/list", listAll);
+router.get("/list", verifyToken, listAll);
 
 // Seleciona um pedido
 /**
@@ -50,7 +51,7 @@ router.get("/list", listAll);
  *       500:
  *         description: Mensagem do erro
  */
-router.get("/:numeroPedido", selectOne);
+router.get("/:numeroPedido", verifyToken, selectOne);
 
 // Atualiza o pedido
 /**
@@ -66,7 +67,7 @@ router.get("/:numeroPedido", selectOne);
  *       500:
  *         description: Mensagem do erro
  */
-router.put("/:numeroPedido", updateOne);
+router.put("/:numeroPedido", verifyToken, updateOne);
 
 // Deleta um pedido
 /**
@@ -82,6 +83,6 @@ router.put("/:numeroPedido", updateOne);
  *       500:
  *         description: Mensagem do erro
  */
-router.delete("/:numeroPedido", deleteOne);
+router.delete("/:numeroPedido", verifyToken, deleteOne);
 
 module.exports = router;
